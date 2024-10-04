@@ -1,10 +1,16 @@
 using EventManagementSystem.Models;
-using EventManagementSystem.Data;
+using System.Collections.Generic;
+//using EventManagementSystem.Data;
 
-public interface IUserRepository
+namespace EventManagementSystem.Data
 {
-    IEnumerable<User> GetUsers();
+    public interface IUserRepository
+    {
+        IEnumerable<User> GetUsers();
+
+        User GetUserById(int id);
+
+        User AddUser(User user, string password);
+    }
 }
-
-
 

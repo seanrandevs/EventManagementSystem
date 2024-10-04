@@ -137,3 +137,4 @@ C:\Users\Sean\Desktop\Web Dev\EventManagementSystem\obj\Debug\net8.0\refint\Even
 C:\Users\Sean\Desktop\Web Dev\EventManagementSystem\obj\Debug\net8.0\EventManagementSystem.pdb
 C:\Users\Sean\Desktop\Web Dev\EventManagementSystem\obj\Debug\net8.0\EventManagementSystem.genruntimeconfig.cache
 C:\Users\Sean\Desktop\Web Dev\EventManagementSystem\obj\Debug\net8.0\ref\EventManagementSystem.dll
+C:\Users\Sean\Desktop\Web Dev\EventManagementSystem\obj\Debug\net8.0\EventManagementSystem.sourcelink.json

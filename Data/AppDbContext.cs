@@ -13,10 +13,5 @@ namespace EventManagementSystem.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Rsvp> RSVPs { get; set; }
 
-        // You can remove this method if you're using dependency injection to configure options
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     optionsBuilder.UseSqlServer("DefaultConnection");
-        // }
     }
 }
