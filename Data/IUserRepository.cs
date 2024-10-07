@@ -11,6 +11,8 @@ namespace EventManagementSystem.Data
         User GetUserById(int id);
 
         User AddUser(User user, string password);
+
+        IEnumerable<Event> GetEvents();
     }
 }
 

@@ -17,6 +17,7 @@ namespace EventManagementSystem.Data
             _passwordHasher = new PasswordHasher<User>();
         }
 
+        // Users
         public IEnumerable<User> GetUsers()
         {
             return _context.Users.ToList(); // Fetch all users from the database
@@ -36,6 +37,12 @@ namespace EventManagementSystem.Data
             _context.SaveChanges(); // Ensure to call SaveChanges 
 
             return user;
+        }
+
+        // Events
+        public IEnumerable<Event> GetEvents()
+        {
+            return _context.Events.ToList(); // Fetch all events from the database
         }
     }
 }

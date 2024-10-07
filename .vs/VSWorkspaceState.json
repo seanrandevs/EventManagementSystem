@@ -3,9 +3,10 @@
     "",
     "\\Controllers",
     "\\Data",
+    "\\Dtos",
     "\\Models",
     "\\Properties"
   ],
-  "SelectedNode": "\\appsettings.json",
+  "SelectedNode": "\\Dtos\\EventDto.cs",
   "PreviewInSolutionExplorer": false
 }

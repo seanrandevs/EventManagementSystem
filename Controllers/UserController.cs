@@ -1,6 +1,7 @@
 using AutoMapper;
 using EventManagementSystem.Data;
 using EventManagementSystem.Models;
+using EventManagementSystem.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventManagementSystem.Controllers;

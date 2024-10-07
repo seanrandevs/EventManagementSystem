@@ -5,17 +5,17 @@ namespace EventManagementSystem.Models
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public DateTime EventDate { get; set; }
+        public string EventDate { get; set; } = string.Empty;
         public string Location { get; set; } = string.Empty;
-        public string CreatedBy { get; set; } = string.Empty;
+        public int CreatedBy { get; set; }
 
-        public Event(string title, string description, DateTime eventDate, string location, string createdBy)
+        public Event(string title, string description, string eventDate, string location, int createdBy)
         {
             Title = title;
             Description = description;
             EventDate = eventDate;
             Location = location;
-            CreatedBy = createdBy;
+            CreatedBy = createdBy; // Ensure correct conversion
         }
     }
 }
