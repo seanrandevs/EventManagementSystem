@@ -11,7 +11,7 @@ namespace EventManagementSystem.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Event> Events { get; set; }
-        public DbSet<Rsvp> RSVPs { get; set; }
+        public DbSet<Rsvp> Rsvps { get; set; }
 
     }
 }

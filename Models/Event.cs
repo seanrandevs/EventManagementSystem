@@ -15,7 +15,7 @@ namespace EventManagementSystem.Models
             Description = description;
             EventDate = eventDate;
             Location = location;
-            CreatedBy = createdBy; // Ensure correct conversion
+            CreatedBy = createdBy;
         }
     }
 }

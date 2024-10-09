@@ -1,63 +1,67 @@
-//using AutoMapper;
-//using EventManagementSystem.Data;
-//using EventManagementSystem.Models;
-//using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using EventManagementSystem.Data;
+using EventManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc;
+using EventManagementSystem.Dtos;
 
-//namespace EventManagementSystem.Controllers;
 
-//[ApiController]
-//[Route("api/[controller]")]
-//public class UserController : ControllerBase
-//{
-//    private readonly IUserRepository _userRepository;
-//    private readonly IMapper _mapper;
+namespace EventManagementSystem.Controllers;
 
-//    public UserController(IUserRepository userRepository, IMapper mapper)
-//    {
-//        _userRepository = userRepository;
-//        _mapper = mapper;
-//    }
+[ApiController]
+[Route("api/[controller]")]
+public class RsvpController : ControllerBase
+{
+    private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
-//    // Get Users
-//    [HttpGet("getusers")]
-//    public ActionResult<IEnumerable<User>> GetUsers()
-//    {
-//        var users = _userRepository.GetUsers();
-//        if (users == null || !users.Any())
-//        {
-//            return NotFound();
-//        }
-//        return Ok(users);
-//    }
-//    // Get Single User
-//    [HttpGet("{id}")]
-//    public ActionResult<User> GetUserById(int id)
-//    {
-//        var user = _userRepository.GetUserById(id);
-//        if (user == null)
-//        {
-//            return NotFound(); // Return 404 if the user is not found
-//        }
-//        return Ok(user); // Return the user object
-//    }
-//    // Add User
-//    [HttpPost("adduser")]
-//    public ActionResult<User> AddUser([FromBody] UserDto userDto)
-//    {
-//        if (userDto == null || string.IsNullOrEmpty(userDto.Password))
-//        {
-//            return BadRequest("User or password is null.");
-//        }
+    public RsvpController(IUserRepository userRepository, IMapper mapper)
+    {
+        _userRepository = userRepository;
+        _mapper = mapper;
+    }
 
-//        var user = new User
-//        {
-//            Username = userDto.Username,
-//            Email = userDto.Email,
-//            Role = userDto.Role
-//        };
+    // Get RSVPs
+    [HttpGet("getrsvps")]
+    public ActionResult<IEnumerable<Rsvp>> GetRsvps()
+    {
+        var rsvps = _userRepository.GetRsvps();
+        if (rsvps == null || !rsvps.Any())
+        {
+            return NotFound();
+        }
+        return Ok(rsvps);
+    }
 
-//        var createdUser = _userRepository.AddUser(user, userDto.Password);
+    // Post RSVP
+    [HttpPost("postrsvp")]
+    public ActionResult<Rsvp> PostRsvp([FromBody] RsvpsDto rsvpsDto)
+    {
+        if (rsvpsDto == null)
+        {
+            return BadRequest("RSVP data is null");
+        }
 
-//        return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
-//    }
-//}
+        var rsvp = _mapper.Map<Rsvp>(rsvpsDto); // Map DTO to the model
+
+        var createdRsvp = _userRepository.AddRsvp(rsvp); // Add RSVP to the database
+
+        return CreatedAtAction(nameof(GetRsvps), new { id = createdRsvp.Id }, createdRsvp); // Return created RSVP
+    }
+    // Update Rsvp
+    [HttpPut("{eventId}/{userId}")]
+    public IActionResult UpdateRsvpStatus(int eventId, int userId, [FromBody] UpdateRsvpStatusDto updateRsvpDto)
+    {
+        var rsvp = _userRepository.GetRsvpByEventAndUser(eventId, userId);
+        if (rsvp == null)
+        {
+            return NotFound($"RSVP not found for Event ID {eventId} and User ID {userId}.");
+        }
+
+        // Update the status
+        rsvp.Status = updateRsvpDto.Status;
+
+        _userRepository.UpdateRsvp(rsvp);
+
+        return NoContent(); // Return 204 status, indicating success without a body
+    }
+}

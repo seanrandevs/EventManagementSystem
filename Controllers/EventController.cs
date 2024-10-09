@@ -1,6 +1,7 @@
 using AutoMapper;
 using EventManagementSystem.Data;
 using EventManagementSystem.Models;
+using EventManagementSystem.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventManagementSystem.Controllers;
@@ -18,7 +19,7 @@ public class EventController : ControllerBase
         _mapper = mapper;
     }
 
-    // Get Users
+    // Get Event
     [HttpGet("getevents")]
     public ActionResult<IEnumerable<Event>> GetEvents()
     {
@@ -29,5 +30,47 @@ public class EventController : ControllerBase
         }
         return Ok(events);
     }
-    
+
+    // Create Event
+    [HttpPost("addevent")]
+    public ActionResult<Event> CreateEvent([FromBody] EventDto eventDto)
+    {
+        if (eventDto == null)
+        {
+            return BadRequest("Event data is null.");
+        }
+
+        var newEvent = new Event(
+            eventDto.Title,
+            eventDto.Description,
+            eventDto.EventDate,
+            eventDto.Location,
+            eventDto.CreatedBy
+        );
+
+        // Add the event to the repository (this step assumes you have a method to save the event)
+        _userRepository.AddEvent(newEvent);
+
+        // Return a 201 Created response
+        return CreatedAtAction(nameof(GetEvents), new { id = newEvent.Id }, newEvent);
+    }
+
+    // Update Event
+    [HttpPut("{id}")]
+    public IActionResult UpdateEvent(int id, [FromBody] EventUpdateDto eventDto)
+    {
+        var existingEvent = _userRepository.GetEventById(id);
+        if (existingEvent == null)
+        {
+            return NotFound($"Event with ID {id} not found.");
+        }
+
+        // Use AutoMapper to map updated values from the DTO
+        _mapper.Map(eventDto, existingEvent);
+
+        _userRepository.UpdateEvent(existingEvent);
+
+        return NoContent(); // Return 204 status, indicating success without a body
+    }
+
 }
